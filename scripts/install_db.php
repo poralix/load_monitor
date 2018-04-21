@@ -5,7 +5,7 @@ require_once dirname(__FILE__) . '/bootstrap.php';
 echo 'creating database...' . "\n";
 
 unset($db);
-unlink($filename);
+if (is_file($filename)) unlink($filename);
 
 $db = new PDO('sqlite:' . $filename);
 $db->exec("CREATE TABLE loads (
