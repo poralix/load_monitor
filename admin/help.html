@@ -1,0 +1,74 @@
+#!/usr/local/bin/php
+
+<?php
+
+?>
+
+<table width="100%" height="100%" cellspacing="0" cellpadding="5">
+    <tbody><tr>
+      <td valign="middle" align="center">
+        <p align="center"><b>Load Monitor - Help</b></p>
+      </td>
+    </tr>
+    <tr>
+       </td>
+        <td valign="top">
+        <p align="center">
+		<b>Support</b>
+		<br>
+		<br>
+		This plugin should not break anything but comes without support or warranty.<br>
+		I am not responsible for any damage to your server.
+	</p>
+      </td>
+    </tr>
+<tr>
+        <td valign="middle" align="center" height="1">
+                <table width="50%">
+                        <tbody><tr><td bgcolor="#C0C0C0"> </td></tr>
+                </tbody></table>
+        </td>
+    </tr>
+ <tr>
+       </td>
+        <td valign="top">
+        <p align="center">
+		<b>Installation</b>
+		<br>
+		<br>
+		After installation trough DirectAdmin no data is showing up, this is normal.<br>
+		The script 'add.sh' should be called preferably by crontab to work, this can<br>
+		be done by running 'install_cron.sh' in '/usr/local/directadmin/plugins/load_monitor/'<br>
+		(it should keep current crontab intact, but do it at your own risk!) or<br>
+		by adding it manually to crontab using 'crontab -e':
+		<br>
+		<br>
+                <i>*/5 * * * * cd /usr/local/directadmin/plugins/load_monitor/scripts/; ./add.sh;</i>
+                <br>
+                <br>
+		The '5' in the command is the interval in minutes the script should run in (5 by default),
+		<br>
+		change this if you like but be aware your machine might slow down if you call the script too often.
+		<br>
+		<br>
+		Make sure the scripts is added under the root user or otherwise it might not collect all data you want.
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+        <td valign="middle" align="center" height="1">
+                <table width="50%">
+                        <tbody><tr><td bgcolor="#C0C0C0"> </td></tr>
+                </tbody></table>
+        </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+        <p align="center"><a href="/CMD_PLUGINS_ADMIN/load_monitor">Back to Load Monitor</a></p>
+        <p align="center"></p>
+      </td>
+    </tr>
+</tbody></table>
+
+

@@ -1,0 +1,68 @@
+#!/usr/local/bin/php
+
+<?php
+
+require_once dirname(__FILE__) . '/../scripts/bootstrap.php';
+
+$selectedTimestamp = strtotime($_GET['created']);
+$selectedPeriod = (floor(date('H', $selectedTimestamp) / 4)) + 1;
+$selectedDay = date('Y-m-d', $selectedTimestamp);
+
+$loadRow = $db->query('SELECT * FROM loads WHERE DATETIME(created) = "' . $_GET['created'] . '" LIMIT 1');
+$r = $loadRow->fetch();
+$tasks = json_decode(base64_decode($r['tasks']), true);
+?>
+<table class=list cellpadding=3 cellspacing=1>
+<form name="reloadform" action="/CMD_PLUGINS_ADMIN/load_monitor/" method=POST>
+
+<input type="hidden" name="day" value="<?php echo $selectedDay; ?>">
+<input type="hidden" name="period" value="<?php echo $selectedPeriod; ?>">
+
+<tr><td class=listtitle colspan=4>Load Monitor</td></tr>
+<tr><td class=list>Showing server load on <?php echo $r['created']; ?></td></tr>
+<tr><td class=listtitle colspan=4 align=right><input type=submit value="Back"></td></tr>
+</form>
+</table>
+
+<br>
+
+<div style="font-family: courier; border: 1px solid;">
+top - <?php echo $r['created']; ?> up <?php echo $r['uptime']; ?>, <?php echo $r['users']; ?> user, load average: <?php echo $r['one']; ?>, <?php echo $r['five']; ?>, <?php echo $r['fifteen']; ?><br>
+Tasks: <?php echo $r['task_total']; ?> total, <?php echo $r['task_running']; ?> running, <?php echo $r['task_sleeping']; ?> sleeping, <?php echo $r['task_stopped']; ?> stopped, <?php echo $r['task_zombie']; ?> zombie<br>
+Cpu(s): <?php echo $r['cpu_us']; ?>%us, <?php echo $r['cpu_sy']; ?>%sy, <?php echo $r['cpu_ni']; ?>%ni, <?php echo $r['cpu_id']; ?>%id, <?php echo $r['cpu_wa']; ?>%wa, <?php echo $r['cpu_hi']; ?>%hi, <?php echo $r['cpu_si']; ?>%si, <?php echo $r['cpu_st']; ?>%st<br>
+Mem: <?php echo $r['mem_total']; ?>k total, <?php echo $r['mem_used']; ?>k used, <?php echo $r['mem_free']; ?>k free, <?php echo $r['mem_buffers']; ?>k buffers<br>
+Swap: <?php echo $r['swap_total']; ?>k total, <?php echo $r['swap_used']; ?>k used, <?php echo $r['swap_free']; ?>k free, <?php echo $r['swap_cached']; ?>k cached
+</div>
+
+<br>
+
+<table class='list table-highlight' cellpadding=3 cellspacing=1>
+<tr ><td class=listtitle><a class=listtitle href='?sort1=1'>PID</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=2'>USER</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=3'>PR</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=4'>NI</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=5'>VIRT</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=6'>RES</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=7'>SHR</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=8'>S</a></td >
+<td class=listtitle><b><a class=listtitle href='?sort1=9'>%CPU</a></b></td >
+<td class=listtitle><a class=listtitle href='?sort1=10'>%MEM</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=11'>TIME+</a></td >
+<td class=listtitle><a class=listtitle href='?sort1=12'>COMMAND</a></td >
+</tr >
+<?php foreach($tasks as $task) { ?>
+<tr>
+	<td class=list2><?php echo $task['pid']; ?></td >
+	<td class=list2><?php echo $task['user']; ?></td >
+	<td class=list2><?php echo $task['pr']; ?></td >
+	<td class=list2><?php echo $task['ni']; ?></td >
+	<td class=list2><?php echo $task['virt']; ?></td >
+	<td class=list2><?php echo $task['res']; ?></td >
+	<td class=list2><?php echo $task['shr']; ?></td >
+	<td class=list2><?php echo $task['s']; ?></td >
+	<td class=list2><?php echo $task['cpu']; ?></td >
+	<td class=list2><?php echo $task['mem']; ?></td >
+	<td class=list2><?php echo $task['time']; ?></td >
+	<td class=list2><?php echo $task['cmd']; ?></td ></tr>
+<?php } ?>
+</table >

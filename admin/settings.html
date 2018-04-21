@@ -1,0 +1,66 @@
+#!/usr/local/bin/php
+
+<?php
+
+require_once dirname(__FILE__) . '/../scripts/bootstrap.php';
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+	$config = array();
+	$config[] = 'maxRemember = ' . $_POST['maxRemember'];
+	$config[] = 'maxTasks = ' . $_POST['maxTasks'];
+	$config[] = 'intervalMinutes = '. $_POST['intervalMinutes'];
+	$config[] = 'colorOne = ' . $_POST['colorOne'];
+	$config[] = 'colorFive = ' . $_POST['colorFive'];
+	$config[] = 'colorFifteen = ' . $_POST['colorFifteen'];
+
+	file_put_contents($pathPlugin . 'scripts/config.ini', implode("\n", $config));
+?>
+<table width="100%" height="100%" cellspacing="0" cellpadding="5">
+    <tbody><tr>
+      <td valign="middle" align="center">
+        <p align="center"><a href="/CMD_PLUGINS_ADMIN/load_monitor"><b>Settings saved</b></a></p>
+      </td>
+    </tr>
+    <tr>
+       </td>
+        <td valign="middle" align="center">
+        <p align="center"><a href="/CMD_PLUGINS_ADMIN/load_monitor">Run ./install_cron.sh if you changed the interval</a></p>
+      </td>
+    </tr>
+    <tr>
+        <td valign="middle" align="center" height="1">
+                <table width="50%">
+                        <tbody><tr><td bgcolor="#C0C0C0"> </td></tr>
+                </tbody></table>
+        </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+        <p align="center"><a href="/CMD_PLUGINS_ADMIN/load_monitor">Back to Load Monitor</a></p>
+        <p align="center"></p>
+      </td>
+    </tr>
+</tbody></table>
+<?php
+die;
+}
+?>
+
+<table class=list cellpadding=3 cellspacing=1>
+	<form name=settings action="/CMD_PLUGINS_ADMIN/load_monitor/settings.html" method="post">
+		<tr><td class=listtitle colspan=3>Load Monitor - Settings</td ></tr >
+		<tr><td class=list>Maximum days to remember loads:</td><td class=list><input type=text name=maxRemember size=32 value=<?php echo $config['maxRemember']; ?>> (0 = all, more days = more space)</td></tr>
+		<tr><td class=list>Maximum task entries to save:</td><td class=list><input type=text name=maxTasks size=32 value=<?php echo $config['maxTasks']; ?>> (0 = all, more tasks = more space)</td></tr>
+		<tr><td class=list>Save interval in minutes:</td><td class=list><input type=text name=intervalMinutes size=32 value=<?php echo $config['intervalMinutes']; ?>> (only if you use ./install_cron.sh)</td></tr>
+
+		<tr><td class=list>&nbsp;</td><td class=list>&nbsp;</td></tr>
+
+		<tr><td class=list>Color 1 Minute:</td><td class=list><input type=text name=colorOne size=32 value=<?php echo $config['colorOne']; ?>></td></tr>
+		<tr><td class=list>Color 5 Minutes:</td><td class=list><input type=text name=colorFive size=32 value=<?php echo $config['colorFive']; ?>></td></tr>
+		<tr><td class=list>Color 15 minutes:</td><td class=list><input type=text name=colorFifteen id=port size=32 value=<?php echo $config['colorFifteen']; ?>></td></tr>
+
+		<tr><td class=listtitle colspan=2 align=right>
+			<input type=submit name=submit value="Save">
+		  </td></tr>
+	</form>
+</table>
