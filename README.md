@@ -4,8 +4,8 @@ Load Monitor
 
 # Version
 
-Original version: 0.1.
-Patched version: 0.1.1
+- Patched version: 0.1.1
+- Original version: 0.1 (written by Future Vision)
 
 # Description
 
@@ -13,8 +13,8 @@ Load monitor plugin for Directadmin
 
 # Author 
 
-Originally written by: Future Vision
-Patched by: Alexe S Grebenschikov (www.poralix.com)
+- Originally written by: Future Vision
+- Patched by: Alex S Grebenschikov (www.poralix.com)
 
 
 # Installation
