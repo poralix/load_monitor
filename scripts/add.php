@@ -35,26 +35,26 @@ $save['task_stopped'] = trim(str_replace('stopped', '', $taskData[3]));
 $save['task_zombie'] = trim(str_replace('zombie', '', $taskData[4]));
 
 $cpuData = explode(',', $data[2]);
-$save['cpu_us'] = trim(str_replace(array('Cpu(s):', '%us'), '', $cpuData[0]));
-$save['cpu_sy'] = trim(str_replace('%sy', '', $cpuData[1]));
-$save['cpu_ni'] = trim(str_replace('%ni', '', $cpuData[2]));
-$save['cpu_id'] = trim(str_replace('%id', '', $cpuData[3]));
-$save['cpu_wa'] = trim(str_replace('%wa', '', $cpuData[4]));
-$save['cpu_hi'] = trim(str_replace('%hi', '', $cpuData[5]));
-$save['cpu_si'] = trim(str_replace('%si', '', $cpuData[6]));
-$save['cpu_st'] = trim(str_replace('%st', '', $cpuData[7]));
+$save['cpu_us'] = floatval(trim(str_replace(array('Cpu(s):', '%us', '%'), '', $cpuData[0])));
+$save['cpu_sy'] = floatval(trim(str_replace('%sy', '', $cpuData[1])));
+$save['cpu_ni'] = floatval(trim(str_replace('%ni', '', $cpuData[2])));
+$save['cpu_id'] = floatval(trim(str_replace('%id', '', $cpuData[3])));
+$save['cpu_wa'] = floatval(trim(str_replace('%wa', '', $cpuData[4])));
+$save['cpu_hi'] = floatval(trim(str_replace('%hi', '', $cpuData[5])));
+$save['cpu_si'] = floatval(trim(str_replace('%si', '', $cpuData[6])));
+$save['cpu_st'] = floatval(trim(str_replace('%st', '', $cpuData[7])));
 
 $memData = explode(',', $data[3]);
-$save['mem_total'] = trim(str_replace(array('Mem:', 'k total'), '', $memData[0]));
-$save['mem_used'] = trim(str_replace('k used', '', $memData[1]));
-$save['mem_free'] = trim(str_replace('k free', '', $memData[2]));
-$save['mem_buffers'] = trim(str_replace('k buffers', '', $memData[3]));
+$save['mem_total'] = floatval(trim(str_replace(array('KiB Mem :', 'Mem:', 'k total'), '', $memData[0])));
+$save['mem_used'] = floatval(trim(str_replace('k used', '', $memData[1])));
+$save['mem_free'] = floatval(trim(str_replace('k free', '', $memData[2])));
+$save['mem_buffers'] = floatval(trim(str_replace('k buffers', '', $memData[3])));
 
-$swapData = explode(',', $data[4]);
-$save['swap_total'] = trim(str_replace(array('Swap:', 'k total'), '', $swapData[0]));
-$save['swap_used'] = trim(str_replace('k used', '', $swapData[1]));
-$save['swap_free'] = trim(str_replace('k free', '', $swapData[2]));
-$save['swap_cached'] = trim(str_replace('k cached', '', $swapData[3]));
+$swapData = explode(',', str_replace('used.', 'used,', $data[4]));
+$save['swap_total'] = floatval(trim(str_replace(array('KiB Swap:', 'Swap:', 'k total'), '', $swapData[0])));
+$save['swap_used'] = floatval(trim(str_replace('k used', '', $swapData[1])));
+$save['swap_free'] = floatval(trim(str_replace('k free', '', $swapData[2])));
+$save['swap_cached'] = floatval(trim(str_replace('k cached', '', $swapData[3])));
 
 $taskData = array_slice($data, 7);
 foreach($taskData as $taskRaw) {
