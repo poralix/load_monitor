@@ -1,6 +1,19 @@
-#!/usr/local/bin/php
-
+#!/usr/local/bin/php -nc/usr/local/directadmin/plugins/load_monitor/php.ini
 <?php
+#####################################################################
+# Load Monitor Plugin for Directadmin (patched version, 2018)       #
+#####################################################################
+#                                                                   #
+# Patched version: 0.2 $ Wed Apr 25 00:34:10 +07 2018               #
+# Original version: 0.1 (written by Future Vision)                  #
+#                                                                   #
+#####################################################################
+# Author:                                                           #
+#                                                                   #
+# - Originally written by: Future Vision                            #
+# - Patched by: Alex S Grebenschikov (www.poralix.com)              #
+#                                                                   #
+#####################################################################
 
 ?>
 
@@ -14,7 +27,7 @@
        </td>
         <td valign="top">
         <p align="center">
-		<b>Support</b>
+		<b>Support Notes from Future Vision</b>
 		<br>
 		<br>
 		This plugin should not break anything but comes without support or warranty.<br>
@@ -43,7 +56,7 @@
 		by adding it manually to crontab using 'crontab -e':
 		<br>
 		<br>
-                <i>*/5 * * * * cd /usr/local/directadmin/plugins/load_monitor/scripts/; ./add.sh;</i>
+                <i>*/5 * * * * cd /usr/local/directadmin/plugins/load_monitor/exec/; ./add.sh;</i>
                 <br>
                 <br>
 		The '5' in the command is the interval in minutes the script should run in (5 by default),
@@ -51,7 +64,7 @@
 		change this if you like but be aware your machine might slow down if you call the script too often.
 		<br>
 		<br>
-		Make sure the scripts is added under the root user or otherwise it might not collect all data you want.
+		Make sure the exec is added under the root user or otherwise it might not collect all data you want.
         </p>
       </td>
     </tr>
@@ -63,12 +76,6 @@
                 </tbody></table>
         </td>
     </tr>
-    <tr>
-      <td valign="top" align="center">
-        <p align="center"><a href="/CMD_PLUGINS_ADMIN/load_monitor">Back to Load Monitor</a></p>
-        <p align="center"></p>
-      </td>
-    </tr>
 </tbody></table>
 
-
+<?php require_once dirname(__FILE__) . '/footer.php'; ?>

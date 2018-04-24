@@ -1,4 +1,4 @@
-#!/bin/sh
+<?php
 #####################################################################
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
@@ -14,11 +14,13 @@
 #                                                                   #
 #####################################################################
 
-PLUGIN_DIR="/usr/local/directadmin/plugins/load_monitor";
+function f($value)
+{
+        return number_format($value, 2);
+}
 
-crontab -l > ${PLUGIN_DIR}/cron_current;
-/usr/local/bin/php -f ${PLUGIN_DIR}/scripts/install_cron.php;
-crontab ${PLUGIN_DIR}/cron_new;
-rm ${PLUGIN_DIR}/cron_current;
-rm ${PLUGIN_DIR}/cron_new;
-exit 0;
+function unhtmlentities($string)
+{
+   return preg_replace('~&#([0-9][0-9])~e', 'chr(\\1)', $string);
+}
+

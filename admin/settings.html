@@ -1,8 +1,21 @@
-#!/usr/local/bin/php
-
+#!/usr/local/bin/php -nc/usr/local/directadmin/plugins/load_monitor/php.ini
 <?php
+#####################################################################
+# Load Monitor Plugin for Directadmin (patched version, 2018)       #
+#####################################################################
+#                                                                   #
+# Patched version: 0.2 $ Wed Apr 25 00:34:10 +07 2018               #
+# Original version: 0.1 (written by Future Vision)                  #
+#                                                                   #
+#####################################################################
+# Author:                                                           #
+#                                                                   #
+# - Originally written by: Future Vision                            #
+# - Patched by: Alex S Grebenschikov (www.poralix.com)              #
+#                                                                   #
+#####################################################################
 
-require_once dirname(__FILE__) . '/../scripts/bootstrap.php';
+require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$config = array();
@@ -12,19 +25,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$config[] = 'colorOne = ' . $_POST['colorOne'];
 	$config[] = 'colorFive = ' . $_POST['colorFive'];
 	$config[] = 'colorFifteen = ' . $_POST['colorFifteen'];
-
-	file_put_contents($pathPlugin . 'scripts/config.ini', implode("\n", $config));
+	file_put_contents($pathPlugin . 'exec/config.ini', implode("\n", $config));
+	exec($pathPlugin . 'exec/install-cron', $res, $out);
 ?>
 <table width="100%" height="100%" cellspacing="0" cellpadding="5">
     <tbody><tr>
       <td valign="middle" align="center">
         <p align="center"><a href="/CMD_PLUGINS_ADMIN/load_monitor"><b>Settings saved</b></a></p>
-      </td>
-    </tr>
-    <tr>
-       </td>
-        <td valign="middle" align="center">
-        <p align="center"><a href="/CMD_PLUGINS_ADMIN/load_monitor">Run ./install_cron.sh if you changed the interval</a></p>
       </td>
     </tr>
     <tr>
@@ -51,7 +58,7 @@ die;
 		<tr><td class=listtitle colspan=3>Load Monitor - Settings</td ></tr >
 		<tr><td class=list>Maximum days to remember loads:</td><td class=list><input type=text name=maxRemember size=32 value=<?php echo $config['maxRemember']; ?>> (0 = all, more days = more space)</td></tr>
 		<tr><td class=list>Maximum task entries to save:</td><td class=list><input type=text name=maxTasks size=32 value=<?php echo $config['maxTasks']; ?>> (0 = all, more tasks = more space)</td></tr>
-		<tr><td class=list>Save interval in minutes:</td><td class=list><input type=text name=intervalMinutes size=32 value=<?php echo $config['intervalMinutes']; ?>> (only if you use ./install_cron.sh)</td></tr>
+		<tr><td class=list>Save interval in minutes:</td><td class=list><input type=text name=intervalMinutes size=32 value=<?php echo $config['intervalMinutes']; ?>></td></tr>
 
 		<tr><td class=list>&nbsp;</td><td class=list>&nbsp;</td></tr>
 
@@ -64,3 +71,4 @@ die;
 		  </td></tr>
 	</form>
 </table>
+<?php require_once dirname(__FILE__) . '/footer.php'; ?>

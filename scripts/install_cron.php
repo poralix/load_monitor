@@ -1,21 +1,34 @@
 <?php
+#####################################################################
+# Load Monitor Plugin for Directadmin (patched version, 2018)       #
+#####################################################################
+#                                                                   #
+# Patched version: 0.2 $ Wed Apr 25 00:34:10 +07 2018               #
+# Original version: 0.1 (written by Future Vision)                  #
+#                                                                   #
+#####################################################################
+# Author:                                                           #
+#                                                                   #
+# - Originally written by: Future Vision                            #
+# - Patched by: Alex S Grebenschikov (www.poralix.com)              #
+#                                                                   #
+#####################################################################
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
 
-$cronCurrent = trim(@file_get_contents('cron_current'));
-
+$cronCurrent = trim(@file_get_contents($pathPlugin.'cron_current'));
 $cronNew = array();
+
 if(!empty($cronCurrent)) {
         $lines = explode("\n", $cronCurrent);
         foreach($lines as $line) {
-                if(strpos($line, '/usr/local/directadmin/plugins/load_monitor/scripts/') === false) {
+                if(strpos($line, $pathPlugin) === false) {
                         $cronNew[] = $line;
                 }
         }
 }
 
-$cronNew[] = '*/' . $config['intervalMinutes'] . ' * * * * cd /usr/local/directadmin/plugins/load_monitor/scripts/; ./add.sh;';
-
-file_put_contents('cron_new', implode("\n",$cronNew) . "\n");
+$cronNew[] = '*/' . $config['intervalMinutes'] . ' * * * * cd '.$pathPlugin.'exec/; ./add.sh;';
+file_put_contents($pathPlugin.'cron_new', implode("\n",$cronNew) . "\n");
 
 echo 'crontab updated' . "\n";

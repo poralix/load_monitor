@@ -1,10 +1,24 @@
-#!/usr/local/bin/php
-
+#!/usr/local/bin/php -nc/usr/local/directadmin/plugins/load_monitor/php.ini
 <?php
+#####################################################################
+# Load Monitor Plugin for Directadmin (patched version, 2018)       #
+#####################################################################
+#                                                                   #
+# Patched version: 0.2 $ Wed Apr 25 00:34:10 +07 2018               #
+# Original version: 0.1 (written by Future Vision)                  #
+#                                                                   #
+#####################################################################
+# Author:                                                           #
+#                                                                   #
+# - Originally written by: Future Vision                            #
+# - Patched by: Alex S Grebenschikov (www.poralix.com)              #
+#                                                                   #
+#####################################################################
 
-require_once dirname(__FILE__) . '/../scripts/bootstrap.php';
+require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
 
-$selectedTimestamp = strtotime($_GET['created']);
+$created=$_GET['created'];
+$selectedTimestamp = strtotime($created);
 $selectedPeriod = (floor(date('H', $selectedTimestamp) / 4)) + 1;
 $selectedDay = date('Y-m-d', $selectedTimestamp);
 
@@ -37,18 +51,18 @@ Swap: <?php echo $r['swap_total']; ?>k total, <?php echo $r['swap_used']; ?>k us
 <br>
 
 <table class='list table-highlight' cellpadding=3 cellspacing=1>
-<tr ><td class=listtitle><a class=listtitle href='?sort1=1'>PID</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=2'>USER</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=3'>PR</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=4'>NI</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=5'>VIRT</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=6'>RES</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=7'>SHR</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=8'>S</a></td >
-<td class=listtitle><b><a class=listtitle href='?sort1=9'>%CPU</a></b></td >
-<td class=listtitle><a class=listtitle href='?sort1=10'>%MEM</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=11'>TIME+</a></td >
-<td class=listtitle><a class=listtitle href='?sort1=12'>COMMAND</a></td >
+<tr ><td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=1'>PID</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=2'>USER</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=3'>PR</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=4'>NI</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=5'>VIRT</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=6'>RES</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=7'>SHR</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=8'>S</a></td >
+<td class=listtitle><b><a class=listtitle href='?created=<?php echo $created; ?>&sort1=9'>%CPU</a></b></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=10'>%MEM</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=11'>TIME+</a></td >
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=12'>COMMAND</a></td >
 </tr >
 <?php foreach($tasks as $task) { ?>
 <tr>
@@ -66,3 +80,5 @@ Swap: <?php echo $r['swap_total']; ?>k total, <?php echo $r['swap_used']; ?>k us
 	<td class=list2><?php echo $task['cmd']; ?></td ></tr>
 <?php } ?>
 </table >
+
+<?php require_once dirname(__FILE__) . '/footer.php'; ?>

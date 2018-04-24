@@ -16,9 +16,6 @@
 
 PLUGIN_DIR="/usr/local/directadmin/plugins/load_monitor";
 
-crontab -l > ${PLUGIN_DIR}/cron_current;
-/usr/local/bin/php -f ${PLUGIN_DIR}/scripts/install_cron.php;
-crontab ${PLUGIN_DIR}/cron_new;
-rm ${PLUGIN_DIR}/cron_current;
-rm ${PLUGIN_DIR}/cron_new;
-exit 0;
+top -n 1 -b > ${PLUGIN_DIR}/data/top.raw;
+/usr/local/bin/php -f ${PLUGIN_DIR}/exec/add.php;
+rm ${PLUGIN_DIR}/data/top.raw;
