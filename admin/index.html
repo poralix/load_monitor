@@ -52,10 +52,9 @@ foreach($loadRows as $loadRow) {
 }
 
 ?>
-<html>
-  <head>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript">
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
 	var data = null;
 	var timeMap = {};
 	<?php foreach($loads as $load) { ?>
@@ -98,10 +97,8 @@ foreach($loadRows as $loadRow) {
 			document.location.href = '/CMD_PLUGINS_ADMIN/load_monitor/details.html?created=' + created;
 		}
 	}
-	</script>
-</head>
-<body>
-  
+</script>
+
 <table class=list cellpadding=3 cellspacing=1>
 <form name="reloadform" action="/CMD_PLUGINS_ADMIN/load_monitor/" method=POST>
 <tr><td class=listtitle colspan=4>Load Monitor</td></tr>
@@ -147,6 +144,4 @@ foreach($loadRows as $loadRow) {
     </tr>
 </tbody></table>
 
-	<?php require_once dirname(__FILE__) . '/footer.php'; ?>
-  </body>
-</html>
+<?php require_once dirname(__FILE__) . '/footer.php'; ?>
