@@ -17,12 +17,12 @@
 
 require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
 
-$created=$_GET['created'];
+$created = (isset($_GET['created']) && $_GET['created']) ? $_GET['created'] : false;
 $selectedTimestamp = strtotime($created);
 $selectedPeriod = (floor(date('H', $selectedTimestamp) / 4)) + 1;
 $selectedDay = date('Y-m-d', $selectedTimestamp);
 
-$loadRow = $db->query('SELECT * FROM loads WHERE DATETIME(created) = "' . $_GET['created'] . '" LIMIT 1');
+$loadRow = $db->query('SELECT * FROM loads WHERE DATETIME(created) = "' . $created . '" LIMIT 1');
 $r = $loadRow->fetch();
 $tasks = json_decode(base64_decode($r['tasks']), true);
 ?>
@@ -51,33 +51,33 @@ Swap: <?php echo $r['swap_total']; ?>k total, <?php echo $r['swap_used']; ?>k us
 <br>
 
 <table class='list table-highlight' cellpadding=3 cellspacing=1>
-<tr ><td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=1'>PID</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=2'>USER</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=3'>PR</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=4'>NI</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=5'>VIRT</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=6'>RES</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=7'>SHR</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=8'>S</a></td >
-<td class=listtitle><b><a class=listtitle href='?created=<?php echo $created; ?>&sort1=9'>%CPU</a></b></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=10'>%MEM</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=11'>TIME+</a></td >
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=12'>COMMAND</a></td >
+<tr ><td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=1'>PID</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=2'>USER</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=3'>PR</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=4'>NI</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=5'>VIRT</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=6'>RES</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=7'>SHR</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=8'>S</a></td>
+<td class=listtitle><b><a class=listtitle href='?created=<?php echo $created; ?>&sort1=9'>%CPU</a></b></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=10'>%MEM</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=11'>TIME+</a></td>
+<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=12'>COMMAND</a></td>
 </tr >
 <?php foreach($tasks as $task) { ?>
 <tr>
-	<td class=list2><?php echo $task['pid']; ?></td >
-	<td class=list2><?php echo $task['user']; ?></td >
-	<td class=list2><?php echo $task['pr']; ?></td >
-	<td class=list2><?php echo $task['ni']; ?></td >
-	<td class=list2><?php echo $task['virt']; ?></td >
-	<td class=list2><?php echo $task['res']; ?></td >
-	<td class=list2><?php echo $task['shr']; ?></td >
-	<td class=list2><?php echo $task['s']; ?></td >
-	<td class=list2><?php echo $task['cpu']; ?></td >
-	<td class=list2><?php echo $task['mem']; ?></td >
-	<td class=list2><?php echo $task['time']; ?></td >
-	<td class=list2><?php echo $task['cmd']; ?></td ></tr>
+	<td class=list2><?php echo $task['pid']; ?></td>
+	<td class=list2><?php echo $task['user']; ?></td>
+	<td class=list2><?php echo $task['pr']; ?></td>
+	<td class=list2><?php echo $task['ni']; ?></td>
+	<td class=list2><?php echo $task['virt']; ?></td>
+	<td class=list2><?php echo $task['res']; ?></td>
+	<td class=list2><?php echo $task['shr']; ?></td>
+	<td class=list2><?php echo $task['s']; ?></td>
+	<td class=list2><?php echo $task['cpu']; ?></td>
+	<td class=list2><?php echo $task['mem']; ?></td>
+	<td class=list2><?php echo $task['time']; ?></td>
+	<td class=list2><?php echo $task['cmd']; ?></td></tr>
 <?php } ?>
 </table >
 

@@ -14,25 +14,44 @@
 #                                                                   #
 #####################################################################
 
-$_GET = Array();
-$QUERY_STRING=getenv('QUERY_STRING');
-if ($QUERY_STRING != "")
+$_POST = array();
+$_GET = array();
+
+# Parse input data
+function parse_input()
 {
-            parse_str(unhtmlentities($QUERY_STRING), $get_array);
-            foreach ($get_array as $key => $value)
+    global $_POST, $_GET;
+    if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] == 'POST')
+                && isset($_SERVER['POST']) && $_SERVER['REQUEST_METHOD'])
+    {
+        parse_str($_SERVER['POST'], $_POST);
+    }
+    if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'])
+    {
+        parse_str($_SERVER['QUERY_STRING'], $_GET);
+    }
+    if (get_magic_quotes_gpc())
+    {
+        $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+        while (list($key, $val) = each($process))
+        {
+            foreach ($val as $k => $v)
             {
-                        $_GET[urldecode($key)] = urldecode($value);
+                unset($process[$key][$k]);
+                if (is_array($v))
+                {
+                    $process[$key][stripslashes($k)] = $v;
+                    $process[] = &$process[$key][stripslashes($k)];
+                }
+                else
+                {
+                    $process[$key][stripslashes($k)] = stripslashes($v);
+                }
             }
+        }
+        unset($process);
+    }
+    return true;
 }
 
-$_POST = Array();
-$POST_STRING=getenv('POST');
-if ($POST_STRING != "")
-{
-            parse_str(unhtmlentities($POST_STRING), $post_array);
-            foreach ($post_array as $key => $value)
-            {
-                        $_POST[urldecode($key)] = urldecode($value);
-            }
-}
-
+parse_input();
