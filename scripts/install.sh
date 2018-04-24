@@ -17,12 +17,12 @@
 PLUGIN_DIR="/usr/local/directadmin/plugins/load_monitor";
 PHP_INI="${PLUGIN_DIR}/php.ini";
 
-chown diradmin:diradmin "${PLUGIN_DIR}/";
-chown diradmin:diradmin "${PLUGIN_DIR}/admin/";
-chown diradmin:diradmin "${PLUGIN_DIR}/data/";
-chown diradmin:diradmin "${PLUGIN_DIR}/exec/";
-chown diradmin:diradmin "${PLUGIN_DIR}/hooks/";
-chown diradmin:diradmin "${PLUGIN_DIR}/scripts/";
+chown diradmin:diradmin ${PLUGIN_DIR}/*;
+chown -R diradmin:diradmin "${PLUGIN_DIR}/admin/";
+chown -R diradmin:diradmin "${PLUGIN_DIR}/data/";
+chown -R diradmin:diradmin "${PLUGIN_DIR}/exec/";
+chown -R diradmin:diradmin "${PLUGIN_DIR}/hooks/";
+chown -R diradmin:diradmin "${PLUGIN_DIR}/scripts/";
 chmod 755 ${PLUGIN_DIR}/admin/*.html;
 chmod 755 ${PLUGIN_DIR}/exec/*.sh;
 
