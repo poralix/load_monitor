@@ -4,7 +4,7 @@ Load Monitor
 
 # Version
 
-- Patched version: 0.1.1
+- Patched versions: 0.2, 0.1.1 (by Alex S Grebenschikov)
 - Original version: 0.1 (written by Future Vision)
 
 # Description
