@@ -2,7 +2,7 @@
 
 Load Monitor
 
-![alt text](https://raw.githubusercontent.com/poralix/load_monitor/master/load_monitor_widget.png)
+![Load Monitor Widget Preview in Evoution Skin](https://raw.githubusercontent.com/poralix/load_monitor/master/load_monitor_widget.png)
 
 # Version
 
