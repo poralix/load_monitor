@@ -28,59 +28,66 @@ $tasks = json_decode(base64_decode($r['tasks']), true);
 
 require_once dirname(__FILE__) . '/header.php';
 ?>
-<table class=list cellpadding=3 cellspacing=1>
-<form name="reloadform" action="/CMD_PLUGINS_ADMIN/load_monitor/" method=POST>
 
-<input type="hidden" name="day" value="<?php echo $selectedDay; ?>">
-<input type="hidden" name="period" value="<?php echo $selectedPeriod; ?>">
-
-<tr><td class=listtitle colspan=4>Load Monitor</td></tr>
-<tr><td class=list>Showing server load on <?php echo $r['created']; ?></td></tr>
-<tr><td class=listtitle colspan=4 align=right><input type=submit value="Back"></td></tr>
+<form name="reloadform" action="/CMD_PLUGINS_ADMIN/load_monitor/" method="GET">
+    <input type="hidden" name="day" value="<?php echo $selectedDay; ?>">
+    <input type="hidden" name="period" value="<?php echo intval($selectedPeriod); ?>">
+    <table class="list" cellpadding="3" cellspacing="1">
+        <tr><td class="listtitle">Load Monitor</td></tr>
+        <tr><td class="list">Showing server load on <?php echo $r['created']; ?></td></tr>
+        <tr><td class="listtitle" align="right"><input type="submit" value="Back" /></td></tr>
+    </table>
 </form>
-</table>
-
 <br>
 
-<div style="font-family: courier; border: 1px solid;">
-top - <?php echo $r['created']; ?> up <?php echo $r['uptime']; ?>, <?php echo $r['users']; ?> user, load average: <?php echo $r['one']; ?>, <?php echo $r['five']; ?>, <?php echo $r['fifteen']; ?><br>
-Tasks: <?php echo $r['task_total']; ?> total, <?php echo $r['task_running']; ?> running, <?php echo $r['task_sleeping']; ?> sleeping, <?php echo $r['task_stopped']; ?> stopped, <?php echo $r['task_zombie']; ?> zombie<br>
-Cpu(s): <?php echo $r['cpu_us']; ?>%us, <?php echo $r['cpu_sy']; ?>%sy, <?php echo $r['cpu_ni']; ?>%ni, <?php echo $r['cpu_id']; ?>%id, <?php echo $r['cpu_wa']; ?>%wa, <?php echo $r['cpu_hi']; ?>%hi, <?php echo $r['cpu_si']; ?>%si, <?php echo $r['cpu_st']; ?>%st<br>
-Mem: <?php echo $r['mem_total']; ?>k total, <?php echo $r['mem_used']; ?>k used, <?php echo $r['mem_free']; ?>k free, <?php echo $r['mem_buffers']; ?>k buffers<br>
-Swap: <?php echo $r['swap_total']; ?>k total, <?php echo $r['swap_used']; ?>k used, <?php echo $r['swap_free']; ?>k free, <?php echo $r['swap_cached']; ?>k cached
-</div>
+<?php
+    echo '<div style="font-family: courier; border: 1px solid; padding: 10px 10px 10px 10px;">';
+    echo 'top - '. $r['created'] .' up '. $r['uptime'] .', '. $r['users'] .' user, load average: '. $r['one'] .', '. $r['five'] .', '. $r['fifteen'] .'<br>';
+    echo 'Tasks: '. $r['task_total'] .' total, '. $r['task_running'] .' running, '. $r['task_sleeping'] .' sleeping, '. $r['task_stopped'] .' stopped, '. $r['task_zombie'] .' zombie<br>';
+    echo 'Cpu(s): '. $r['cpu_us'] .'%us, '. $r['cpu_sy'] .'%sy, '. $r['cpu_ni'] .'%ni, '. $r['cpu_id'] .'%id, '. $r['cpu_wa'] .'%wa, '. $r['cpu_hi'] .'%hi, '. $r['cpu_si'] .'%si, '. $r['cpu_st'] .'%st<br>';
+    echo 'Mem: '. $r['mem_total'] .'k total, '. $r['mem_used'] .'k used, '. $r['mem_free'] .'k free, '. $r['mem_buffers'] .'k buffers<br>';
+    echo 'Swap: '. $r['swap_total'] .'k total, '. $r['swap_used'] .'k used, '. $r['swap_free'] .'k free, '. $r['swap_cached'] .'k cached';
+    echo '</div>';
+    echo '<br>';
+?>
 
-<br>
-
-<table class='list table-highlight' cellpadding=3 cellspacing=1>
-<tr ><td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=1'>PID</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=2'>USER</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=3'>PR</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=4'>NI</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=5'>VIRT</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=6'>RES</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=7'>SHR</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=8'>S</a></td>
-<td class=listtitle><b><a class=listtitle href='?created=<?php echo $created; ?>&sort1=9'>%CPU</a></b></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=10'>%MEM</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=11'>TIME+</a></td>
-<td class=listtitle><a class=listtitle href='?created=<?php echo $created; ?>&sort1=12'>COMMAND</a></td>
-</tr >
-<?php foreach($tasks as $task) { ?>
+<table class='list table-highlight' cellpadding="3" cellspacing="1">
 <tr>
-	<td class=list2><?php echo $task['pid']; ?></td>
-	<td class=list2><?php echo $task['user']; ?></td>
-	<td class=list2><?php echo $task['pr']; ?></td>
-	<td class=list2><?php echo $task['ni']; ?></td>
-	<td class=list2><?php echo $task['virt']; ?></td>
-	<td class=list2><?php echo $task['res']; ?></td>
-	<td class=list2><?php echo $task['shr']; ?></td>
-	<td class=list2><?php echo $task['s']; ?></td>
-	<td class=list2><?php echo $task['cpu']; ?></td>
-	<td class=list2><?php echo $task['mem']; ?></td>
-	<td class=list2><?php echo $task['time']; ?></td>
-	<td class=list2><?php echo $task['cmd']; ?></td></tr>
-<?php } ?>
-</table >
+    <td class="listtitle">PID</td>
+    <td class="listtitle">USER</td>
+    <td class="listtitle">PR</td>
+    <td class="listtitle">NI</td>
+    <td class="listtitle">VIRT</td>
+    <td class="listtitle">RES</td>
+    <td class="listtitle">SHR</td>
+    <td class="listtitle">S</td>
+    <td class="listtitle">%CPU</b></td>
+    <td class="listtitle">%MEM</td>
+    <td class="listtitle">TIME+</td>
+    <td class="listtitle">COMMAND</td>
+</tr>
+<?php
+$row_id = 0;
+foreach($tasks as $task)
+{
+    $row_id ++;
+    $td_class = ($row_id%2) ? 'list' : 'list2';
+    echo '<tr id="row_id'.$row_id.'">';
+    echo '<td class="'.$td_class.'">'.$task['pid'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['user'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['pr'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['ni'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['virt'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['res'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['shr'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['s'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['cpu'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['mem'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['time'].'</td>';
+    echo '<td class="'.$td_class.'">'.$task['cmd'].'</td>';
+    echo '</tr>';
+}
+echo '</table>';
+require_once dirname(__FILE__) . '/footer.php'; 
 
-<?php require_once dirname(__FILE__) . '/footer.php'; ?>
+?>
