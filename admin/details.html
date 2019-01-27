@@ -32,7 +32,7 @@ require_once dirname(__FILE__) . '/header.php';
 <form name="reloadform" action="/CMD_PLUGINS_ADMIN/load_monitor/" method="GET">
     <input type="hidden" name="day" value="<?php echo $selectedDay; ?>">
     <input type="hidden" name="period" value="<?php echo intval($selectedPeriod); ?>">
-    <table class="list" cellpadding="3" cellspacing="1">
+    <table class="list" cellpadding="3" cellspacing="1" width="100%">
         <tr><td class="listtitle">Load Monitor</td></tr>
         <tr><td class="list">Showing server load on <?php echo $r['created']; ?></td></tr>
         <tr><td class="listtitle" align="right"><input type="submit" value="Back" /></td></tr>
