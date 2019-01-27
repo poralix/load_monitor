@@ -1,3 +1,4 @@
+#!/usr/local/bin/php -nc/usr/local/directadmin/plugins/load_monitor/php.ini
 <?php
 #####################################################################
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
@@ -13,13 +14,10 @@
 # - Patched by: Alex S Grebenschikov (www.poralix.com)              #
 #                                                                   #
 #####################################################################
-?>
-<br><br>
-<center>
-    <a href="/CMD_PLUGINS_ADMIN/load_monitor/settings.html">Settings</a> | <a href="/CMD_PLUGINS_ADMIN/load_monitor/">Plugin Home</a>
-    <br>
-    <br>Load Monitor was Originally written by Future Vision, patched and updated by <a href="https://www.poralix.com/?load_monitor">Poralix.com</a>, 2018-2019 
-</center>
-<?php
+
+print '<h3>Load Monitor</h3>';
+print '<iframe id="WGT_PLUGINS_ADMIN_LOAD_MONITOR" src="/CMD_PLUGINS_ADMIN/load_monitor/index.raw?nocache=0.'.md5(time()).'" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;top:0px;left:0px;right:0px;bottom:0px; min-width: 400px; min-height: 500px;" height="100%" width="100%"></iframe></td></tr>';
+print '<div><center>Current time: '. date('r') .'</center></div>';
+require_once '/usr/local/directadmin/plugins/load_monitor/admin/footer.php'; 
 
 ?>

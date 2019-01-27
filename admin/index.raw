@@ -15,13 +15,14 @@
 #                                                                   #
 #####################################################################
 
+echo "HTTP/1.1 200 OK\n";
+echo "Cache-Control: no-cache, must-revalidate\n";
+echo "Content-type: text/html\n\n";
+
 require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
 
 $currentDay = date('Y-m-d');
 $currentPeriod = (floor(date('H') / 4)) + 1;
-
-$currentDay = (isset($_POST['day']) && $_POST['day']) ? $_POST['day'] : ((isset($_GET['day']) && $_GET['day']) ? $_GET['day'] : $currentDay);
-$currentPeriod = (isset($_POST['period']) && $_POST['period']) ? intval($_POST['period']) : ((isset($_GET['period']) && $_GET['period']) ? intval($_GET['period']) : $currentPeriod);
 
 $periodTimes = explode('-', $periods[$currentPeriod]);
 
@@ -72,12 +73,6 @@ require_once dirname(__FILE__) . '/header.php';
 
 		var options = {
 			title: 'Server load on <?php echo $currentDay; ?> between <?php echo $periods[$currentPeriod]; ?>',
-			width: 770,
-			height: 500,
-			chartArea: {
-				width: 690,
-				height: 380
-			},
 			colors:['<?php echo $config['colorOne']; ?>','<?php echo $config['colorFive']; ?>','<?php echo $config['colorFifteen']; ?>'],
 			legend: {position: 'bottom'}
 		};
@@ -89,60 +84,9 @@ require_once dirname(__FILE__) . '/header.php';
 			var selection = chart.getSelection();
 			var time = data.getFormattedValue(selection[0]['row'], 0);
 			var created = timeMap[time];
-			document.location.href = '/CMD_PLUGINS_ADMIN/load_monitor/details.html?created=' + created;
+			parent.location.href = '/CMD_PLUGINS_ADMIN/load_monitor/details.html?created=' + created;
 		}
 	}
 </script>
 
-<form name="reloadform" action="/CMD_PLUGINS_ADMIN/load_monitor/" method="GET">
-<table class="list" width="100%" cellpadding="3" cellspacing="1">
-<tr><td class="listtitle" colspan="4">Load Monitor</td></tr>
-<tr>
-    <td width="25%" class="list" align="right">Day</td>
-    <td width"25%" class="list">
-    <select class=selectclass name="day">
-<?php
-    foreach($dayRows as $day) {
-        $sel = '';
-        if($day['day'] == $currentDay) {
-            $sel = 'selected="selected"';
-        }
-?>
-        <option <?php echo $sel; ?> value="<?php echo $day['day']; ?>"><?php echo $day['day']; ?></option>
-<?php
-    }
-?>
-    </select>
-    </td>
-    <td width="25%" class="list" align="right">Period</td>
-    <td width="25%" class="list">
-    <select class="selectclass" name="period">
-<?php
-    foreach($periods as $k => $period) {
-        $sel = '';
-        if($k == $currentPeriod) {
-            $sel = 'selected="selected"';
-        }
-?>
-        <option <?php echo $sel; ?> value="<?php echo $k; ?>"><?php echo $period; ?></option>
-<?php
-    }
-?>
-    </select>
-    </td>
-</tr>
-<tr><td class="listtitle" colspan="4" align="right"><a href="?" class="white">Show current</a> &nbsp; <input type="submit" value="Select Period"></td></tr>
-</table>
-</form>
-<div id="chart_div" style="width: 100%; min-width: 770px; height: 500px;"></div>
-<table width="100%" height="10" cellspacing="0" cellpadding="5" border="0">
-<tbody>
-<tr>
-    <td valign="middle" align="center" height="1">
-    <table width="50%"><tbody><tr><td bgcolor="#C0C0C0"> </td></tr></tbody></table>
-    </td>
-</tr>
-</tbody>
-</table>
-
-<?php require_once dirname(__FILE__) . '/footer.php'; ?>
+<div id="chart_div" style="width: 100%; height: 100%;"></div>

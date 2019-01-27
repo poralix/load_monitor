@@ -4,12 +4,13 @@ Load Monitor
 
 # Version
 
-- Patched versions: 0.2.3, 0.1.1 (by Alex S Grebenschikov)
+- Patched version: 0.2.4 (by Alex S Grebenschikov)
 - Original version: 0.1 (written by Future Vision)
 
 # Changes history:
 
 - 0.2.3: Updated to work under Evolution skin
+- 0.2.4: An admin widget added for Evolution skin
 
 # Description
 
