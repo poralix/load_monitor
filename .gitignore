@@ -1,2 +1,3 @@
 data/load_monitor.sqlite
+data/top.raw*
 exec/install-cron

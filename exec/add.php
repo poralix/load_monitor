@@ -3,7 +3,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2 $ Wed Apr 25 00:34:10 +07 2018               #
+# Patched version: 0.2.3 $ Sun Jan 27 13:08:11 +07 2019             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -17,7 +17,8 @@
 require_once dirname(__FILE__) . '/bootstrap.php';
 
 $save = array();
-$data = file($pathPlugin.'data/top.raw');
+$file = (isset($argv[1]) && $argv[1]) ? $argv[1] : false;
+$data = file($pathPlugin.'data/'. basename($file));
 
 $str = $data[0];
 $up = 'up';

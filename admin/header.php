@@ -14,21 +14,35 @@
 #                                                                   #
 #####################################################################
 
-require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
-
-$cronCurrent = trim(@file_get_contents($pathPlugin.'cron_current'));
-$cronNew = array();
-
-if(!empty($cronCurrent)) {
-        $lines = explode("\n", $cronCurrent);
-        foreach($lines as $line) {
-                if(strpos($line, $pathPlugin) === false) {
-                        $cronNew[] = $line;
-                }
-        }
+if (EVOLUTION_SKIN === true)
+{
+?>
+<style>
+* {
+    font-family: Open Sans,Tahoma,sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.67;
+    color: #34383c;
 }
-
-$cronNew[] = '*/' . $config['intervalMinutes'] . ' * * * * cd '.$pathPlugin.'exec/; ./add.sh;';
-file_put_contents($pathPlugin.'cron_new', implode("\n",$cronNew) . "\n");
-
-echo 'crontab updated' . "\n";
+.list2 {
+    background-color: #f9f9fa;
+    border-bottom: 1px solid silver;
+    padding: 10px 10px 10px 10px;
+}
+.list {
+    padding: 10px 10px 10px 10px;
+}
+.listtitle {
+    padding: 10px 10px 10px 10px;
+    font-weight: 600;
+    background-color: #f9f9fa;
+}
+.selectclass {}
+</style>
+<?php
+}
+else
+{
+    
+}

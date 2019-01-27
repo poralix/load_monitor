@@ -3,7 +3,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2 $ Wed Apr 25 00:34:10 +07 2018               #
+# Patched version: 0.2.3 $ Sun Jan 27 13:08:11 +07 2019             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################

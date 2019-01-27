@@ -4,7 +4,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2 $ Wed Apr 25 00:34:10 +07 2018               #
+# Patched version: 0.2.3 $ Sun Jan 27 13:08:11 +07 2019             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -17,17 +17,11 @@
 
 require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
 
-$currentPeriod = (floor(date('H') / 4)) + 1;
 $currentDay = date('Y-m-d');
+$currentPeriod = (floor(date('H') / 4)) + 1;
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if(!empty($_POST['day'])) {
-		$currentDay = $_POST['day'];
-	}
-	if(!empty($_POST['period'])) {
-		$currentPeriod = $_POST['period'];
-	}
-}
+$currentDay = (isset($_POST['day']) && $_POST['day']) ? $_POST['day'] : ((isset($_GET['day']) && $_GET['day']) ? $_GET['day'] : $currentDay);
+$currentPeriod = (isset($_POST['period']) && $_POST['period']) ? intval($_POST['period']) : ((isset($_GET['period']) && $_GET['period']) ? intval($_GET['period']) : $currentPeriod);
 
 $periodTimes = explode('-', $periods[$currentPeriod]);
 
@@ -51,6 +45,7 @@ foreach($loadRows as $loadRow) {
 	);
 }
 
+require_once dirname(__FILE__) . '/header.php';
 ?>
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -99,10 +94,10 @@ foreach($loadRows as $loadRow) {
 	}
 </script>
 
-<table class=list cellpadding=3 cellspacing=1>
-<form name="reloadform" action="/CMD_PLUGINS_ADMIN/load_monitor/" method=POST>
+<form name="reloadform" action="/CMD_PLUGINS_ADMIN/load_monitor/" method="GET">
+<table class="list" cellpadding="3" cellspacing="1">
 <tr><td class=listtitle colspan=4>Load Monitor</td></tr>
-<tr><td width="25%" class=list align=right>Day</td><td width"25%" class=list>
+<tr><td width="25%" class="list" align="right">Day</td><td width"25%" class="list">
 <select class=selectclass name="day">
 	<?php foreach($dayRows as $day) {
 		$sel = '';
@@ -114,8 +109,8 @@ foreach($loadRows as $loadRow) {
 	<?php } ?>
 </select>
 </td>
-<td width="25%" class=list align=right>Period</td><td width="25%" class=list>
-<select class=selectclass name="period">
+<td width="25%" class="list" align="right">Period</td><td width="25%" class="list">
+<select class="selectclass" name="period">
 <?php foreach($periods as $k => $period) {
                 $sel = '';
                 if($k == $currentPeriod) {
@@ -127,13 +122,12 @@ foreach($loadRows as $loadRow) {
 </select>
 </td>
 </tr>
-<tr><td class=listtitle colspan=4 align=right><input type=submit value="Show loads"></td></tr>
-</form>
+<tr><td class="listtitle" colspan="4" align="right"><a href="?">Show current</a> &nbsp; <input type="submit" value="Select Period"></td></tr>
 </table>
+</form>
 
 <div id="chart_div" style="width: 770px; height: 500px;"></div>
-
-<table width="100%" height="100%" cellspacing="0" cellpadding="5">
+<table width="100%" height="10" cellspacing="0" cellpadding="5" border="0">
     <tbody>
     <tr>
         <td valign="middle" align="center" height="1">
