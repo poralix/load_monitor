@@ -87,6 +87,15 @@ require_once dirname(__FILE__) . '/header.php';
 			parent.location.href = '/CMD_PLUGINS_ADMIN/load_monitor/details.html?created=' + created;
 		}
 	}
+	function refresh() {
+		setTimeout(function () {
+			location.reload()
+		}, 120000); // 120 seconds
+	}
+	refresh();
 </script>
 
-<div id="chart_div" style="width: 100%; height: 100%;"></div>
+<?php
+
+print '<div id="chart_div" style="width: 100%; height: 95%;"></div>';
+print '<div><center>Server time: '. date('r') .'</center></div>';
