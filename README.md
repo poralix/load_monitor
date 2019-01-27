@@ -2,6 +2,8 @@
 
 Load Monitor
 
+![alt text](https://raw.githubusercontent.com/poralix/load_monitor/master/load_monitor_widget.png)
+
 # Version
 
 - Patched version: 0.2.4 (by Alex S Grebenschikov)
@@ -9,8 +11,8 @@ Load Monitor
 
 # Changes history:
 
-- 0.2.3: Updated to work under Evolution skin
 - 0.2.4: An admin widget added for Evolution skin
+- 0.2.3: Updated to work under Evolution skin
 
 # Description
 
