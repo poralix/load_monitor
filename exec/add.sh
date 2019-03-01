@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #####################################################################
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
@@ -34,8 +34,8 @@ process_top_output() {
     fi;
 }
 
-OS=$(uname);
-OS_VERSION=$(da_os_major_version);
+OS="$(uname)";
+OS_VERSION="$(da_os_major_version)";
 if [ "${OS}" == "FreeBSD" ]; then
     echo "[ERROR][$(date)] We don't support FreeBSD yet...";
     exit 1;
