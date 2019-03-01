@@ -3,7 +3,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2.4 $ Sun Jan 27 17:26:09 +07 2019             #
+# Patched version: 0.2.5 $ Fri Mar  1 12:20:55 +07 2019             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -18,6 +18,9 @@ require_once dirname(__FILE__) . '/bootstrap.php';
 
 $save = array();
 $file = (isset($argv[1]) && $argv[1]) ? $argv[1] : false;
+$os_name = (isset($argv[2]) && $argv[2]) ? $argv[2] : false;
+$os_version = (isset($argv[3]) && $argv[3]) ? intval($argv[3]) : false;
+
 $data = file($pathPlugin.'data/'. basename($file));
 
 $str = $data[0];
@@ -65,7 +68,7 @@ $save['mem_used'] = floatval(trim(str_replace('k used', '', $memData[1])));
 $save['mem_free'] = floatval(trim(str_replace('k free', '', $memData[2])));
 $save['mem_buffers'] = floatval(trim(str_replace('k buffers', '', $memData[3])));
 
-$swapData = explode(',', str_replace('used.', 'used,', $data[4]));
+$swapData = explode(',', str_replace(array('used.', 'free.'), array('used,', 'free,'), $data[4]));
 $save['swap_total'] = floatval(trim(str_replace(array('KiB Swap:', 'Swap:', 'k total'), '', $swapData[0])));
 $save['swap_used'] = floatval(trim(str_replace('k used', '', $swapData[1])));
 $save['swap_free'] = floatval(trim(str_replace('k free', '', $swapData[2])));
@@ -164,6 +167,4 @@ $values = array(
 
 $db->exec('INSERT INTO loads (`' . implode('`,`', $fields) . '`) VALUES(' . implode(',', $values) . ')');
 // stop data loss if maxRemember set to 0 (never delete):
-if ( $config['maxRemember'] > 0 )
-//
-$db->exec('DELETE FROM loads WHERE DATE(created) < "' . date('Y-m-d', strtotime('-' . $config['maxRemember'] . ' days')) . ' "');
+if ($config['maxRemember'] > 0) $db->exec('DELETE FROM loads WHERE DATE(created) < "' . date('Y-m-d', strtotime('-' . $config['maxRemember'] . ' days')) . ' "');

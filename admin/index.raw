@@ -4,7 +4,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2.4 $ Sun Jan 27 17:26:09 +07 2019             #
+# Patched version: 0.2.5 $ Fri Mar  1 12:20:55 +07 2019             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -21,9 +21,18 @@ echo "Content-type: text/html\n\n";
 
 require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
 
-$start = date('Y-m-d H:i', time()-3600);
-$end = date('Y-m-d H:i', time());
+$currentDay = date('Y-m-d');
+$currentPeriod = (floor(date('H') / 4)) + 1;
 
+$periodTimes = explode('-', $periods[$currentPeriod]);
+
+$hourStart = trim($periodTimes[0]) . ':00';
+$hourEnd = trim($periodTimes[1]) . ':59';
+
+$start = $currentDay . ' ' .$hourStart;
+$end = $currentDay . ' ' . $hourEnd;
+
+$dayRows = $db->query('SELECT strftime("%Y-%m-%d", created) as day FROM loads GROUP BY DATE(created)');
 $loadRows = $db->query('SELECT one, five, fifteen, strftime("%H:%M", created) as curtime, created FROM loads WHERE DATETIME(created) BETWEEN "' . $start . '" AND "' . $end . '"');
 
 $loads = array();
@@ -63,7 +72,7 @@ require_once dirname(__FILE__) . '/header.php';
 		]);
 
 		var options = {
-			title: 'Server Load Average in the last hour',
+			title: 'Server load on <?php echo $currentDay; ?> between <?php echo $periods[$currentPeriod]; ?>',
 			colors:['<?php echo $config['colorOne']; ?>','<?php echo $config['colorFive']; ?>','<?php echo $config['colorFifteen']; ?>'],
 			legend: {position: 'bottom'}
 		};
