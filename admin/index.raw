@@ -21,16 +21,8 @@ echo "Content-type: text/html\n\n";
 
 require_once dirname(dirname(__FILE__)) . '/exec/bootstrap.php';
 
-$currentDay = date('Y-m-d');
-$currentPeriod = (floor(date('H') / 4)) + 1;
-
-$periodTimes = explode('-', $periods[$currentPeriod]);
-
-$hourStart = trim($periodTimes[0]) . ':00';
-$hourEnd = trim($periodTimes[1]) . ':59';
-
-$start = $currentDay . ' ' .$hourStart;
-$end = $currentDay . ' ' . $hourEnd;
+$start = date('Y-m-d H:i', time()-3600);
+$end = date('Y-m-d H:i', time());
 
 $dayRows = $db->query('SELECT strftime("%Y-%m-%d", created) as day FROM loads GROUP BY DATE(created)');
 $loadRows = $db->query('SELECT one, five, fifteen, strftime("%H:%M", created) as curtime, created FROM loads WHERE DATETIME(created) BETWEEN "' . $start . '" AND "' . $end . '"');
@@ -72,7 +64,7 @@ require_once dirname(__FILE__) . '/header.php';
 		]);
 
 		var options = {
-			title: 'Server load on <?php echo $currentDay; ?> between <?php echo $periods[$currentPeriod]; ?>',
+			title: 'Server Load Average in the last hour',
 			colors:['<?php echo $config['colorOne']; ?>','<?php echo $config['colorFive']; ?>','<?php echo $config['colorFifteen']; ?>'],
 			legend: {position: 'bottom'}
 		};
