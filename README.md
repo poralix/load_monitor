@@ -48,12 +48,21 @@ Then go to the plugin settings and update:
 
 # Warnings and requirements
 
+Time Zone is taken from `/usr/local/directadmin/custombuild/options.conf`. Make sure the value of `php_timezone=` corresponds to your actual Time Zone.
+
+The plugin loads JavaScript files from Google to draw graphs, i.e. it uses Google's libraries for drawing graphs. Your browser should be allowed to load JS from Google.
+
 Supported and tested OS:
 
 - CentOS 6 and 7
 - Debian 8
 
 Potentially can work under  Debian versions (not tested though).
+
+# FAQ:
+
+- Q: Time zone is wrong what to do?
+- A: Change Time Zone in `php_timezone=` of `/usr/local/directadmin/custombuild/options.conf`. And update the plugin.
 
 # Have ideas?
 
