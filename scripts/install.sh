@@ -3,7 +3,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2.5 $ Fri Mar  1 12:20:55 +07 2019             #
+# Patched version: 0.2.6 $ Mon Mar  4 18:07:41 +07 2019             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -45,5 +45,11 @@ WRAPPER="install-cron";
 ${GCC} -std=gnu99 -B/usr/bin -o ${PLUGIN_DIR}/exec/${WRAPPER} ${PLUGIN_DIR}/exec/${WRAPPER}.c >> /dev/null 2>&1;
 chown root:diradmin ${PLUGIN_DIR}/exec/${WRAPPER};
 chmod 4550 ${PLUGIN_DIR}/exec/${WRAPPER};
+
+cd "${PLUGIN_DIR}";
+perl -pi -e "s/^installed=.*/installed=yes/" plugin.conf;
+perl -pi -e "s/^active=.*/active=yes/" plugin.conf;
+
+echo "Plugin installed...";
 
 exit 0;

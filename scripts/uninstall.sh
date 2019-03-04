@@ -3,7 +3,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2.5 $ Fri Mar  1 12:20:55 +07 2019             #
+# Patched version: 0.2.6 $ Mon Mar  4 18:07:41 +07 2019             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -21,5 +21,10 @@ PLUGIN_DIR="/usr/local/directadmin/plugins/load_monitor";
 crontab -l | grep -v ${PLUGIN_DIR} > ${PLUGIN_DIR}/cron_new;
 crontab ${PLUGIN_DIR}/cron_new;
 rm -f ${PLUGIN_DIR}/cron_new;
+
+cd "${PLUGIN_DIR}";
+perl -pi -e "s/^installed=yes/installed=no/" ./plugin.conf;
+perl -pi -e "s/^active=yes/active=no/" ./plugin.conf;
+echo "Plugin uninstalled...";
 
 exit 0;

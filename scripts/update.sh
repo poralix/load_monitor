@@ -15,5 +15,9 @@
 #####################################################################
 
 PLUGIN_DIR="/usr/local/directadmin/plugins/load_monitor";
-/usr/local/bin/php -nc/usr/local/directadmin/plugins/load_monitor/php.ini -f ${PLUGIN_DIR}/scripts/install_db.php;
+cd "${PLUGIN_DIR}";
+./scripts/install.sh >/dev/null 2>&1;
+
+echo "Plugin updated...";
+
 exit 0;
