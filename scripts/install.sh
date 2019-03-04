@@ -17,7 +17,8 @@
 PLUGIN_DIR="/usr/local/directadmin/plugins/load_monitor";
 PHP_INI="${PLUGIN_DIR}/php.ini";
 
-chown diradmin:diradmin ${PLUGIN_DIR}/*;
+chmod 755 "${PLUGIN_DIR}";
+chown -R diradmin:diradmin "${PLUGIN_DIR}";
 chown -R diradmin:diradmin "${PLUGIN_DIR}/admin/";
 chown -R diradmin:diradmin "${PLUGIN_DIR}/data/";
 chown -R diradmin:diradmin "${PLUGIN_DIR}/exec/";
