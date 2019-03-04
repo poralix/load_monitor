@@ -19,11 +19,6 @@ PHP_INI="${PLUGIN_DIR}/php.ini";
 
 chmod 755 "${PLUGIN_DIR}";
 chown -R diradmin:diradmin "${PLUGIN_DIR}";
-chown -R diradmin:diradmin "${PLUGIN_DIR}/admin/";
-chown -R diradmin:diradmin "${PLUGIN_DIR}/data/";
-chown -R diradmin:diradmin "${PLUGIN_DIR}/exec/";
-chown -R diradmin:diradmin "${PLUGIN_DIR}/hooks/";
-chown -R diradmin:diradmin "${PLUGIN_DIR}/scripts/";
 chmod 755 ${PLUGIN_DIR}/admin/*.html;
 chmod 755 ${PLUGIN_DIR}/exec/*.sh;
 
@@ -32,6 +27,14 @@ ${PLUGIN_DIR}/scripts/install_cron.sh;
 
 TZ=$(grep ^php_timezone= /usr/local/directadmin/custombuild/options.conf | cut -d= -f2);
 perl -pi -e "s#^date.timezone = .*#date.timezone = ${TZ}#" ${PHP_INI};
+
+# config
+CUSTOM_CONFIG="${PLUGIN_DIR}/exec/config.ini";
+DEFAULT_CONFIG="${PLUGIN_DIR}/exec/config.ini.default";
+[ -e "${CUSTOM_CONFIG}" ] || cp -p "${DEFAULT_CONFIG}" "${CUSTOM_CONFIG}";
+
+chown diradmin:diradmin "${CUSTOM_CONFIG}";
+chmod 644 "${CUSTOM_CONFIG}";
 
 GCC=gcc;
 if [ -e /usr/bin/gcc ]; then

@@ -1,4 +1,5 @@
 data/load_monitor.sqlite
 data/top.raw*
+exec/config.ini
 exec/install-cron
 available_version.txt
