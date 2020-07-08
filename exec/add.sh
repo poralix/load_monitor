@@ -3,7 +3,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2.6 $ Mon Mar  4 18:07:41 +07 2019             #
+# Patched version: 0.2.7 $ Thu Jul  9 01:01:56 +07 2020             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -22,6 +22,9 @@ da_os_major_version() {
 }
 
 process_top_output() {
+    LANG="en_US.UTF-8";
+    LANGUAGE="en_US.UTF-8";
+    LC_ALL="en_US.UTF-8";
     top -n 1 -b > "${FILE_RAW}";
     if [ -f "${FILE_RAW}" ]; then
         FILENAME_RAW=$(basename "${FILE_RAW}");
