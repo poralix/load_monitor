@@ -167,4 +167,14 @@ $values = array(
 
 $db->exec('INSERT INTO loads (`' . implode('`,`', $fields) . '`) VALUES(' . implode(',', $values) . ')');
 // stop data loss if maxRemember set to 0 (never delete):
-if ($config['maxRemember'] > 0) $db->exec('DELETE FROM loads WHERE DATE(created) < "' . date('Y-m-d', strtotime('-' . $config['maxRemember'] . ' days')) . ' "');
+if ($config['maxRemember'] > 0) {
+    $curr_hour = date("H");
+    $curr_minute = date("i");
+    $time_window = $config['intervalMinutes']*3;
+    if (($curr_hour == 0) && ($curr_minute < $time_window)) {
+        $db->exec('DELETE FROM loads WHERE DATE(created) < "' . date('Y-m-d', strtotime('-' . $config['maxRemember'] . ' days')) . ' "');
+    }
+    /*else {
+        echo "Skipping a delete task, Hour=".$curr_hour.", Minute=".$curr_minute."\n";
+    }*/
+}
