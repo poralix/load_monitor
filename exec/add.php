@@ -3,7 +3,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2.8 $ Thu Jun 10 14:50:40 +07 2021             #
+# Patched version: 0.2.9 $ Fri Aug  9 15:33:31 +07 2024             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -63,13 +63,13 @@ $save['cpu_si'] = floatval(trim(str_replace('%si', '', $cpuData[6])));
 $save['cpu_st'] = floatval(trim(str_replace('%st', '', $cpuData[7])));
 
 $memData = explode(',', $data[3]);
-$save['mem_total'] = floatval(trim(str_replace(array('KiB Mem :', 'Mem:', 'k total'), '', $memData[0])));
+$save['mem_total'] = floatval(trim(str_replace(array('GiB Mem :', 'MiB Mem :', 'KiB Mem :', 'Mem:', 'k total'), '', $memData[0])));
 $save['mem_used'] = floatval(trim(str_replace('k used', '', $memData[1])));
 $save['mem_free'] = floatval(trim(str_replace('k free', '', $memData[2])));
 $save['mem_buffers'] = floatval(trim(str_replace('k buffers', '', $memData[3])));
 
 $swapData = explode(',', str_replace(array('used.', 'free.'), array('used,', 'free,'), $data[4]));
-$save['swap_total'] = floatval(trim(str_replace(array('KiB Swap:', 'Swap:', 'k total'), '', $swapData[0])));
+$save['swap_total'] = floatval(trim(str_replace(array('GiB Swap:', 'MiB Swap:', 'KiB Swap:', 'Swap:', 'k total'), '', $swapData[0])));
 $save['swap_used'] = floatval(trim(str_replace('k used', '', $swapData[1])));
 $save['swap_free'] = floatval(trim(str_replace('k free', '', $swapData[2])));
 $save['swap_cached'] = floatval(trim(str_replace('k cached', '', $swapData[3])));

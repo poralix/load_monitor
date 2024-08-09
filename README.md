@@ -6,11 +6,12 @@ Load Monitor
 
 # Version
 
-- Patched version: 0.2.8 (by Alex S Grebenschikov)
+- Patched version: 0.2.9 (by Alex S Grebenschikov)
 - Original version: 0.1 (written by Future Vision)
 
 # Changes history:
 
+- 0.2.9: Fixed a bug related to `top` parsing of total available Swap and RAM
 - 0.2.8: Setting Language to en_US.UTF-8 before parsing `top` output
 - 0.2.6: Minor update is done to enable updates of the plugin via Directadmin interface
 - 0.2.5: Minor changes: to use own php.ini. A fix for Debian 8 added.
@@ -55,7 +56,7 @@ The plugin loads JavaScript files from Google to draw graphs, i.e. it uses Googl
 
 Supported and tested OS:
 
-- CentOS 6 and 7
+- CentOS 6, 7, 8
 - Debian 8
 
 Potentially can work under  Debian versions (not tested though).
