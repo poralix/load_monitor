@@ -3,6 +3,7 @@
 #include <libgen.h>
 #include <unistd.h>
 #include <pwd.h>
+#include <string.h>
 #include <sys/types.h>
 #define USER "diradmin"
 #define GROUP "diradmin"
