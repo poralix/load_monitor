@@ -3,7 +3,7 @@
 # Load Monitor Plugin for Directadmin (patched version, 2018)       #
 #####################################################################
 #                                                                   #
-# Patched version: 0.2.9 $ Thu Jul  9 01:01:56 +07 2020             #
+# Patched version: 0.2.10 $ Fri Jun  5 11:31:18 UTC 2026             #
 # Original version: 0.1 (written by Future Vision)                  #
 #                                                                   #
 #####################################################################
@@ -25,7 +25,7 @@ process_top_output() {
     LANG="en_US.UTF-8";
     LANGUAGE="en_US.UTF-8";
     LC_ALL="en_US.UTF-8";
-    top -n 1 -b > "${FILE_RAW}";
+    HOME=/dev/null top -n 1 -b > "${FILE_RAW}";
     if [ -f "${FILE_RAW}" ]; then
         FILENAME_RAW=$(basename "${FILE_RAW}");
         /usr/local/bin/php -nc/usr/local/directadmin/plugins/load_monitor/php.ini -f "${PLUGIN_DIR}/exec/add.php" "${FILENAME_RAW}" "${1}" "${2}";
