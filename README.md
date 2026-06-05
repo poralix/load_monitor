@@ -60,6 +60,7 @@ Supported and tested OS:
 - CentOS 6, 7, 8
 - CentOS Stream 9
 - AlmaLinux 7 - 10
+- CloudLinux 10
 - Debian 8
 
 Potentially can work under  Debian versions (not tested though).
